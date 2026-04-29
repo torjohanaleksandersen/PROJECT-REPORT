@@ -1,0 +1,90 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{preamble}
+
+
+\PassOptionsToPackage{
+  backend=biber,
+  style=numeric, % eller authoryear
+  sorting=nyt,
+  giveninits=true,
+  maxbibnames=99,
+  doi=false,isbn=false,url=true,
+  dashed=false
+}{biblatex}
+
+
+\usepackage{preamble}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{circuitikz}
+\usepackage{float} % for [H] exact figure placement
+\usetikzlibrary{arrows.meta}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{subcaption} % i preamble
+
+\usepackage{graphicx}
+
+
+
+\addbibresource{./referanser.bib}
+
+% ------ Metadata ------
+\newcommand{\institution}{FHS/Cyberingeniørskolen}
+\newcommand{\laboratory}{Elektronikklaboratoriet}
+\newcommand{\coursecode}{ING2509 \; Elektro}
+\newcommand{\assignmentno}{V01}
+\newcommand{\assignmenttype}{LABORATORIERAPPORT}
+\newcommand{\assignmenttitle}{DIODER}
+\newcommand{\studentname}{Tor Johan Aleksandersen}
+\newcommand{\partnername}{Morten Cleveland}
+\newcommand{\class}{VING 78}
+\newcommand{\labdate}{26. mars 2026}
+\newcommand{\submissiondate}{\today}
+
+\begin{document}
+
+\input{frontpage}
+
+\pagenumbering{Roman}
+\setcounter{page}{1}
+
+\input{sections/sammendrag}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{sections/innledning}
+\clearpage
+
+\input{sections/instrumenter}
+\clearpage
+
+\input{sections/teori}
+\clearpage
+
+\input{sections/resultater}
+\clearpage
+
+\input{sections/diskusjon}
+\clearpage
+
+\input{sections/konklusjon}
+\clearpage
+
+\printbibliography[heading=bibintoc,title={Referanser}]
+\clearpage
+
+
+%\section*{Vedlegg}
+%\addcontentsline{toc}{section}{Vedlegg}
+%\input{sections/vedlegg}
+%\clearpage
+
+\end{document}
