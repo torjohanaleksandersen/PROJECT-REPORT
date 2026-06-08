@@ -58,9 +58,46 @@ En trimmerkondensator er en kondensator med variabel kapasitans, hvor kapasitans
 Trimmerkondensatorer benyttes ofte til finjustering av resonansfrekvens i oscillator- og filterkretser.
 
 \subsection{Spole}
+En spole er en passiv, topolet elektrisk komponent som er laget for å oppvise en induktans eller for å kunne skape et magnetfelt. Spolen lagrer energi i det magnetiske feltet som dannes når elektrisk strøm flyter gjennom den. Induktansen $L$ til en spole er et mål på hvor mye motstand den gir mot endringer i strøm. Induktansen avhenger av spolegeometri, antall viklinger, og materialet i kjernen.
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+    \draw (0, 0) to[L] (3, 0);
+\end{circuitikz}
+\caption{Symbolet for spole.}
+\end{figure}
+\noindent
+Spenningen over spolen er proporsjonal med strømendringn gjennom den,
+\[
+v(t) = L \cdot \frac{di(t)}{dt}
+\]
+\noindent
+Der $L$ er induktansen i henry (H), $v(t)$ er spenningen over spolen, og $i(t)$ er strømmen gjennom spolen. Spoler benyttes blant annet i filterkretser, transformatorer og som del av resonansretser i oscillatorer. Dersom strømmen er konstant, vil spolen oppføre seg som en kortslutning, mens ved raske endringer i strømmen vil den motsette seg kraftig, og dermed kunne blokkere eller dempe signaler avhengig av frekvens. I teoretiske beregninger vil vi kortslutte denne i DC-analyse, og beholde den i AC-analyse for å utforske oscillasjonsegenskapene.
+\\[1em]
+I denne rapporten benyttes håndviklede luftspoler, hvor induktansen kan beregnes ved formelen
+\[
+L=\frac{\mu_0 N^2 A}{l}
+\]
+der $\mu_0$ er den magnetiske konstanten, $N$ er antall viklinger, $A$ er tverrsnittsarealet av spolen, og $l$ er lengden av spolen. Luftspoler har ingen kjerne og dermed ingen metningseffekter, noe som gjør dem egnet for høyfrekvente applikasjoner som i denne rapporten.
+
+\subsection{Transistor (BJT)}
+En bipolar junction transistor (BJT) er en type transistor som består av tre lag av dopet halvledermateriale, og har tre terminaler: emitter, base og kollektor. Transistoren kan operere i tre hovedmodi: aktiv, metning og cutoff. I aktiv modus vil den kunne bruke en liten strøm for å forsterke en større strøm, dette er grunnlaget for forsterking og switching i elektroniske kretser.
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+    \draw (0, 0) node[npn, anchor=B] (Q1) {};
+    \node[right=6pt, align=center] at (Q1) {$Q_1$\\BC547};
+
+    \node[left] at (Q1.B) {Base};
+    \node[above] at (Q1.C) {Collector};
+    \node[below] at (Q1.E) {Emitter};
+
+\end{circuitikz}
+\caption{Symbolet for NPN BJT-transistor.}
+\end{figure}
+\noindent
 
 
-\subsection{Transistor}
 
 \subsection{NE555 timer}
 
@@ -79,13 +116,13 @@ I denne seksjonen presenterer vi kretsen, og gjør beregninger på den for å be
 \noindent
 Kretsen forsynes av et 9 V batteri. Bryteren fungerer som et seriekoblet brudd i forsyningslinjen, og bestemmer derfor om kretsen er aktiv eller ikke. Når bryteren er lukket, vil toppskinnen i kretsen ha et potensial på omtrent 9 V relativt til bunnskinnen, som fungerer som jord.
 \\[1em]
-Grenen bestående av $R_6$ og $LED_1$ brukes som indikator for om kretsen er spenningssatt. For beregningen antas et typisk spenningsfall over LED-dioden på $V_{LED} \approx 2\,\text{V}$. Strømmen gjennom grenen kan da beregnes ved Kirchhoffs spenningslov:
+Grenen bestående av $R_6$ og $LED_1$ brukes som indikator for om kretsen er spenningssatt. For beregningen antas et typisk spenningsfall over LED-dioden på $V_{LED} \approx 2\text{V}$. Strømmen gjennom grenen kan da beregnes ved Kirchhoffs spenningslov:
 
 \begin{align*}
     V_{CC} &= V_{R6} + V_{LED} \\
-    9\,\text{V} &= I_{R6} \cdot R_6 + 2\,\text{V} \\
-    I_{R6} &= \frac{9\,\text{V} - 2\,\text{V}}{1\,\text{k}\Omega} \\
-    I_{R6} &= 7\,\text{mA}
+    9\text{V} &= I_{R6} \cdot R_6 + 2\text{V} \\
+    I_{R6} &= \frac{9\text{V} - 2\text{V}}{1\text{k}\Omega} \\
+    I_{R6} &= 7\text{mA}
 \end{align*}
 
 \noindent
@@ -110,11 +147,10 @@ Siden kondensatoren lades gjennom $R_1 + R_2$ og utlades gjennom $R_2$, blir per
 Frekvensen kan dermed uttrykkes som:
 
 \begin{gather*}
-    f = \frac{1}{T} \\[0.5em]
-    f  = \frac{1}{\ln(2)(R_1 + 2R_2)C_5} \\[0.5em]
+    f = \frac{1}{T} = \frac{1}{\ln(2)(R_1 + 2R_2)C_5} \\[0.5em]
     f  \approx \frac{1.44}{(R_1 + 2R_2)C_5} \\[0.5em]
-    f = \frac{1.44}{(6.8\,\text{k}\Omega + 2 \cdot 82\,\text{k}\Omega)\cdot 3.3\,\text{pF}} \\[0.5em]
-    f  \approx 2.55\,\text{MHz}
+    f = \frac{1.44}{(6.8\text{k}\Omega + 2 \cdot 82\text{k}\Omega)\cdot 3.3\text{pF}} \\[0.5em]
+    f  \approx 2.55\text{MHz}
 \end{gather*}
 
 \noindent
@@ -127,13 +163,13 @@ For å videre kunne analysere kretsen, tar vi for oss beregninger på transistor
 \begin{circuitikz}
 
 % Forsyningsskinne
-\draw (0,6) node[vcc] {$9\,\text{V}$} -- (5,6);
+\draw (1.5, 6) -- (4.3,6);
 
 % R3/R4 spenningsdeler
-\draw (1.5,6) to[R, l={\shortstack{$R_3$\\$10\,\text{k}\Omega$}}] (1.5,3)
+\draw (1.5,6) to[R, l={\shortstack{$R_3$\\$10\text{k}\Omega$}}] (1.5,3)
       -- (2.6,3);
 
-\draw (1.5,3) to[R, l={\shortstack{$R_4$\\$5.6\,\text{k}\Omega$}}] (1.5,0)
+\draw (1.5,3) to[R, l={\shortstack{$R_4$\\$5.6\text{k}\Omega$}}] (1.5,0)
       node[ground] {};
 
 % Transistor
@@ -144,19 +180,267 @@ For å videre kunne analysere kretsen, tar vi for oss beregninger på transistor
 \draw (2.6,3) -- (Q1.B);
 
 % Kollektor til 9V
-\draw (Q1.C) -- ++(0,2);
+\draw (Q1.C) -- ++(0,2.2);
 
 % Emitter og R5 til jord
 \draw (Q1.E)
-      to[R, l={\shortstack{$R_5$\\$220\,\Omega$}}] ++(0,-2)
+      to[R, l={\shortstack{$R_5$\\$220\Omega$}}] ++(0,-2)
       node[ground] {};
 
 % Litt tekst
-\node[above] at (3.5,6) {$V_C \approx 9\,\text{V}$};
+\node[above] at (3,6.5) {$V_C = 9\text{V}$};
 
 % Koblingspunkt
 \fill (1.5,3) circle (2pt);
+\fill (1.5, 6) circle (2pt);
+\fill (4.3,6) circle (2pt);
+
+\end{circuitikz}
+\caption{DC-tilstand for transistoren $Q_1$.}\label{fig:Q-DC}
+\end{figure}
+
+\noindent
+DC-analyse av denne transistorkoblingen innebærer at vi bruker Thevenins teorem for å forenkle basedelen av kretsen. Vi kan finne Thevenin-ekvivalenten ved å fjerne transistorens base og beregne den ekvivalente spenningen og motstanden sett fra basen.
+\begin{figure}[H]
+\centering
+
+\begin{minipage}{0.45\textwidth}
+\centering
+\[
+\begin{aligned}
+    V_{th} &= V_C \cdot \frac{R_4}{R_4 + R_3} \\
+    V_{th} &= 9\text{V} \cdot \frac{5.6\text{k}\Omega}{5.6\text{k}\Omega + 10\text{k}\Omega} \\
+    V_{th} &\approx 3.23\text{V}
+\end{aligned}
+\]
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\[
+\begin{aligned}
+    R_{th} &= R_3 \parallel R_4 \\
+    R_{th} &= \left( \frac{1}{R_3} + \frac{1}{R_4} \right)^{-1} \\
+    R_{th} &= \left( \frac{1}{10\text{k}\Omega} + \frac{1}{5.6\text{k}\Omega} \right)^{-1} \\
+    R_{th} &\approx 3.59\text{k}\Omega
+\end{aligned}
+\]
+\end{minipage}
+
+\end{figure}
+
+\noindent
+THeveninsekvivalenten for basedelen av transistoren vil gi denne forenklede kretsen, som i praksis er det samme som i figur~\ref{fig:Q-DC}.
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+
+% Transistor
+\draw (3.5,3) node[npn, anchor=B] (Q1) {};
+\node[right=6pt, align=center] at (Q1) {$Q_1$\\BC547};
+
+% Thevenin-kilde og basestrøm
+\draw (0, 3)
+      to[R,
+         l={\shortstack{$R_{th}$\\$3.59\text{k}\Omega$}},
+         i>^={$I_B$}
+      ] (Q1.B);
+
+% Kollektor og kollektorstrøm
+\draw (Q1.C)
+      to[short, i<^={$I_C$}]
+      ++(0,2.2);
+
+% Emitter, emitterstrøm og emittermotstand
+\draw (Q1.E)
+      to[R,
+         l={\shortstack{$R_5$\\$220\Omega$}},
+         i>_={$I_E$}
+      ] ++(0,-2)
+      node[ground] {};
+
+% Tekst
+\node[above] at (4.33,6) {$V_C = 9\text{V}$};
+\node[left] at (0,3) {$V_{th} = 3.23\text{V}$};
+
+% Koblingspunkter
+\fill (4.33,6) circle (2pt);
+\fill (0,3) circle (2pt);
 
 \end{circuitikz}
 \caption{DC-tilstand for transistoren $Q_1$.}
+\label{fig:Q-DC-thevenin}
 \end{figure}
+
+\begin{center}
+\begin{minipage}[t]{0.47\textwidth}
+\begin{align*}
+I_B &= \frac{V_{th} - V_{BE}}
+           {R_{th} + (\beta + 1) R_E} \\
+  I_B  &= \frac{3.23\text{V} - 0.7\text{V}}
+           {3.59\text{k}\Omega + (300 + 1)\cdot220\Omega} \\
+ I_B   &\approx 36.24\mu\text{A}
+\end{align*}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\begin{align*}
+I_E &= (\beta + 1)I_B \\
+  I_E  &\approx (300 + 1)\cdot36.24\mu\text{A} \\
+  I_E  &\approx 10.91\text{mA}
+\end{align*}
+\end{minipage}
+
+\vspace{1em}
+
+\begin{align*}
+V_{CE} &= V_C - I_E R_5 \\
+ V_{CE}      &= 9\text{V} - 10.91\text{mA}\cdot220\Omega \\
+  V_{CE}     &\approx 6.60\text{V}
+\end{align*}
+\end{center}
+
+\noindent
+Transistoren opererer i aktiv region, da $V_{CE} > 0.2\text{V}$ og $I_C$ er proporsjonal med $I_B$. Dette betyr at transistoren vil forsterke signalet fra NE555 timeren, og at kollektorstrømmen vil variere i takt med basestrømmen som genereres av timerens utgangssignal. Videre tar vi for oss AC-analyse av transistoren. Målet med AC-analysen er i tillegg å utforske oscillasjonsegenskapene, nærmere hva spolene burde være. Derfor vil AC-analysen beholde kondensatorene og spolene i kretsen, men vi vil kortslutte kondensator $C_1$. AC-ekvivalent er i figuren under.
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}[american voltages]
+    \draw (0,0) -- (6,0)
+        to[R, l={\shortstack{$\beta R_e$\\$x\Omega$}}] (6,-3) to[short] (14, -3)
+        to[C, a={\shortstack{$C_3$\\$2\text{pF}$}}] (14,0) -- (15,0);
+    
+    \draw (1, 0) to[C, l={\shortstack{$C_2$\\$47\text   {pF}$}}] (1,-3) node[ground] {};
+
+    \draw (3.5, 0) to[R, l={\shortstack{$R_3 \parallel R_4$\\$y\text{k}\Omega$}}] (3.5,-3) node[ground] {};
+
+    \draw (8, -3) to[R, l={\shortstack{$R_5$\\$220\Omega$}}] (8,-6) node[ground] {};
+
+    \draw (14,0) to[short] (9,0) to[cI, l={\shortstack{$\beta I_B$\\$z\text{mA}$}}] (9,-3);
+
+    \draw (11.5, 0) to[R, l={\shortstack{$r_o$\\$\approx \infty \Omega$}}] (11.5,-3);
+
+    \draw (9, 0) to[variable capacitor, l={\shortstack{$C_5$\\$3.3\text{pF}$}}] (9,3) to [L, l={\shortstack{$L_1$\\$3\:\text{viklinger}$}}] (11.5,3) to [L, l={\shortstack{$L_2$\\$4\:\text{viklinger}$}}] (14,3) to [short] (14,0);
+
+
+\end{circuitikz}
+\caption{Oscillasjonsanalyse av kretsen.}
+\end{figure}
+
+\clearpage
+
+\noindent
+Oscillatorkretsen har likhetstrekk med både Colpitts- og Armstrong-oscillatorer. Resonansfrekvensen bestemmes av en LC-resonanskrets, mens tilbakekoblingen oppnås gjennom de magnetisk koblede spolene $L_1$ og $L_2$. Siden tilbakekoblingen hovedsakelig skjer induktivt gjennom en separat vikling, kan kretsen beskrives som nærmere en Armstrong-oscillator enn en klassisk Colpitts-oscillator.
+\\[1em]
+For at oscillasjonen skal opprettholdes må Barkhausens kriterium være oppfylt. 
+Dette innebærer at løkkeforsterkningen må være større enn eller lik én,
+\[
+|A\beta| \geq 1,
+\]
+\noindent
+samt at den totale faseskyvningen rundt tilbakekoblingssløyfen er \(0^\circ\) eller \(360^\circ\). Transistoren bidrar med forsterkning, mens spolene \(L_1\) og \(L_2\) sørger for den nødvendige positive tilbakekoblingen.
+\\[1em]
+Frekvensen for oscillasjonen i denne kretsen kan tilnærmes det av en Armstrong- eller Colpitts-oscillator, hvor den dominerende resonansfrekvensen er gitt av:
+\[
+f_0 \approx \frac{1}{2\pi \sqrt{L_{eq} C_{eq}}}
+\]
+\noindent
+Den effektive kapasitansen i resonanskretsen består hovedsakelig av trimmerkondensatoren \(C_5\), kondensatoren \(C_3\) og ulike parasittkapasitanser fra transistor, kretskort og antenne. Den kan derfor tilnærmes som
+
+\[
+C_{eq} \approx C_5 + C_3 + C_{par},
+\]
+\noindent
+der
+\[
+C_{par} = C_{cb} + C_{antenne} + C_{PCB}.
+\]
+\noindent
+Med komponentverdiene fra kretsen fås
+\[
+C_{eq} \approx 30\text{pF} + 2\text{pF} + C_{par}.
+\]
+\noindent
+Dersom parasittkapasitansene neglisjeres, blir den effektive kapasitansen
+\[
+C_{eq} \approx 32\text{pF}.
+\]
+\noindent
+I praksis vil parasittkapasitansene bidra med noen få pikofarad, slik at den effektive kapasitansen typisk ligger i området
+\[
+C_{eq} \approx 35\text{pF} - 40\text{pF}.
+\]
+\noindent
+For å jamme FN-frekvenser må resonansfrekvensen ligge et sted rundt 100MHz. Ved å bruke formelen for resonansfrekvensen kan vi finne den nødvendige induktansen i spolene:
+\begin{gather*}
+    L_{eq} = \frac{1}{(2\pi f_0)^2 C_{eq}} \\
+    L_{eq} \approx \frac{1}{(2\pi \cdot 100\text{MHz})^2 \cdot 35\text{pF}} \\
+    L_{eq} \approx 72.4\text{nH}
+\end{gather*}
+
+\noindent
+I den aktuelle kretsen bidrar $L_1$ for resonanskretsen og $L_2$ for tilbakekoblingen. Ekvivalente induktans kan tilnærmes som hovedsaklig $L_1$ og et lite bidrag fra $L_2$. Ekvivalente induktans kan derfor tilnærmes til $L_1$ pluss den gjensidige induktansen mellom $L_1$ og $L_2$.
+\begin{gather*}
+    L_{eq} = L_1 + M \\
+    L_{eq} = L_1 + k \sqrt{L_1L_2}, \quad k \approx 0.1 \\
+\end{gather*}
+\noindent
+der $L_{eq} = 72.4\text{nH}$ og $k \approx 0.1$ som et estimat basert på effekten av den magnetiske koblingen. Ved å bruke formelen for induktans i en spole kan vi finne antall viklinger som trengs for å oppnå denne induktansen, gitt en spole med diameter $r$, antall viklinger $N$ og lengde $l$:
+\begin{gather*}
+    L = \frac{\mu_0 N^2 \pi r^2}{l}, \qquad A = \pi r^2 \\
+    L_1 = \frac{4\pi \cdot 10^{-7} \cdot (3)^2 \cdot \pi (4\text{mm})^2}{7.5\text{mm}} \qquad L_2 = \frac{4\pi \cdot 10^{-7} \cdot (4)^2 \cdot \pi (4\text{mm})^2}{7.5\text{mm}} \\
+    L_1 \approx 75.8\text{nH} \qquad
+    L_2 \approx 134.8\text{nH} \\
+    L_{eq} \approx L_1 + k \sqrt{L_1 L_2} \\
+    L_{eq} \approx 85.28\text{nH}
+\end{gather*}
+
+\begin{table}[H]
+\centering
+\caption{Valgte spesifikasjoner for de magnetisk koblede luftspolene.}
+\label{tab:spolespesifikasjoner}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Spole} & \textbf{Viklinger} & \textbf{Radius [mm]} & \textbf{Lengde [mm]} & \textbf{Tråd} & \textbf{Induktans [nH]} \\
+\midrule
+
+$L_1$ & 3 & 4.0 & 7.5 & 24 AWG & 75.8 \\
+$L_2$ & 4 & 4.0 & 7.5 & 24 AWG & 134.8 \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+Dette er noe nære den utregnede induktansen på 72.4nH, og vil derfor kunne gi en resonansfrekvens i nærheten av FM-båndområdet. Siden resonansfrekvensen er avhengig av ekvivalent kapasitans, kan vi regne ut hvordan resonansfrekvensen vil variere med ulike verdier av trimmerkapasitans og parasittkapasitans. Dette er oppsummert i tabellen under.
+
+\begin{table}[H]
+\centering
+\caption{Estimert resonansfrekvens for ulike verdier av trimmer- og parasittkapasitans.}
+\label{tab:resonansfrekvens}
+\begin{tabular}{lccc}
+\toprule
+\textbf{$C_5$ [pF]} & \textbf{$C_{par}$ [pF]} & \textbf{$C_{eq}$ [pF]} & \textbf{$f_0$ [MHz]} \\
+\midrule
+
+3  & 0 & 5  & 243.7 \\
+33 & 0 & 35 & 92.1 \\
+3  & 5 & 10 & 172.3 \\
+33 & 5 & 40 & 86.2 \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Kommentar til utregninger. } Beregningen viser at oscillasjonsfrekvensen vil ligge i området mellom 86MHz og 172MHz, avhengig av den effektive kapasitansen i kretsen. 555-timeren fungerer som en eksitasjonskilde for transistortrinnet. Den endelige utsendte frekvensen bestemmes hovedsakelig av LC-resonanskretsen, mens firkantsignalet bidrar til å skape et bredere spekter av frekvenskomponenter som kan forstyrre mottakeren.
+
+\paragraph{RF- til antenna. } RF-signalet på omtrent 100MHz som genereres av oscillator-kretsen, vil bli matet til antennen fra RF-kretsen gjennom kondensatoren $C_4$. Denne kondensatoren fungerer som en koblingskondensator, som blokkerer DC-komponenter og lar AC-signalet passere til antennen. Antennen vil deretter stråle ut det genererte RF-signal i det elektromagnetiske spektrumet, og dermed kunne jamme kommunikasjon på de aktuelle frekvensene.
+\\[1em]
+Lengden på antennen er valgt til omtrent en kvart bølgelengde for den ønskede frekvensen, som kan beregnes ved:
+\begin{gather*}
+    \lambda = \frac{c}{f} \\
+    \lambda = \frac{3 \cdot 10^8\text{m/s}}{100\text{MHz}} \\
+    \lambda = 3\text{m} \\
+    L_{antenne} = \frac{\lambda}{4} = 0.75\text{m}
+\end{gather*}
