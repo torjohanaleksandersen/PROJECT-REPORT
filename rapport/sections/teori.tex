@@ -101,6 +101,13 @@ En bipolar junction transistor (BJT) er en type transistor som består av tre la
 
 \subsection{NE555 timer}
 
+NE555 timeren er en integrert krets som brukes i en rekke applikasjoner, inkludert timer, delay, oscillator og flip-flop. I kretsen vår vil vi benytte timeren for å kunne produsere et firkantsignal på en bestemt frekvens. NE555 timeren har åtte pinner. Pin 1 er jord, og pin 8 er forsyningsspenning. Pin 2 er triggerinngangen, som aktiverer timeren når spenningen faller under en tredjedel av forsyningsspenningen. Pin 3 er utgangen, hvor firkantsignalet genereres. Pin 4 er reset-inngangen, som kan brukes til å nullstille kretsen. Pin 5 er kontrollspenning og brukes vanligvis ikke i enkle applikasjoner. Pin 6 er threshold-inngangen, som overvåker spenningen på kondensatoren. Pin 7 er discharge-utgangen, som brukes til å lade ut kondensatoren, mens pin 8 er koblet til forsyningsspenningen.
+\\[1em]
+I denne oppgaven brukes NE555 timeren i astabil modus, der kretsen kontinuerlig veksler mellom høy og lav utgangsspenning. Dette oppnås ved at en kondensator lades opp og lades ut gjennom motstander koblet til timeren. Når spenningen over kondensatoren når to tredjedeler av forsyningsspenningen, skifter utgangen til lav. Når spenningen deretter faller under en tredjedel av forsyningsspenningen, skifter utgangen tilbake til høy. Denne prosessen gjentas kontinuerlig og danner et firkantsignal.
+\\[1em]
+Frekvensen til utgangssignalet bestemmes av verdiene på motstandene og kondensatoren i kretsen. Ved å velge passende komponentverdier kan ønsket frekvens oppnås. Utgangssignalet fra NE555 timeren brukes videre i kretsen som klokkesignal for de digitale komponentene.
+
+
 \subsection{Antenne}
 En antenne er en elektrisk komponent som er laget for å sende og/elelr motta radiosignaler. Den fungerer ved å konvertere elektriske signaler til elektromagnetiske bølger, og omvendt. Dersom vi påtrykker en skiftende spenning på antennen, vil elektronene inni antennen oscillere langs antennen på samme frekvens som spenningen. Etter Maxwells lover vil elektronene indusere et eleketrisk og magnetisk felt, dette gir opphav for at den elektromagnetiske energien kan propergere gjennom rommet. Målet med antennen i dette prosjektet blir å generere frekvenser fra kretsen og sende det på antennen, slik at antennen på radioen vi ønsker å jamme kan ta opp signalet og dermed forstyrre kommunikasjonen.
 
@@ -119,6 +126,30 @@ I denne seksjonen presenterer vi kretsen, og gjør beregninger på den for å be
 \begin{circuitikz}
     \draw (0, 0) to[switch] (0, -3) to [battery1, l_={9V}] (0, -6) node[ground] {};
     \draw (0, 0) to[short] (1.5, 0) to[R, l={\shortstack{$R_6$\\$1\text{k}\Omega$}}] (1.5, -3) to[led, l={\shortstack{$LED_1$}}] (1.5, -6) node[ground] {};
+    \draw (1.5, 0) to[short] (4.3, 0) to[R, l={\shortstack{$R_1$\\$6.8\text{k}\Omega$}}] (4.3, -2) to[R, l={\shortstack{$R_2$\\$82\text{k}\Omega$}}] (4.3, -4) to[C, l={\shortstack{$C_5$\\$3.3\text{pF}$}}] (4.3, -6) node[ground] {};
+    \draw(4.3, 0) to[short] (7.5, 0) to[short] (7.5, -2);
+    \draw(7.5, -4) to[short] (7.5, -6) node[ground] {};
+
+    \draw (7.5, -3) to[cC, l={\shortstack{$C_1$\\$4.7\text{pF}$}}] (9.5, -3) to[C, l={\shortstack{$C_2$\\$47\text{pF}$}}] (9.5, -6) node[ground] {};
+
+    \draw(9.5, -3) to[short] (9.5, 0) to[short] (11.5, 0);
+
+    \draw (7.5, 0) to[short] (11.5, 0) to[R, l={\shortstack{$R_3$\\$10\text{k}\Omega$}}] (11.5, -3) to[R, l={\shortstack{$R_4$\\$5.6\text{k}\Omega$}}] (11.5, -6) node[ground] {};
+
+    \draw (14.3, 0) to[short] (15.3, 0) to[L, l={\shortstack{$L_1$\\$3\:\text{viklinger}$}}] (16.3, 0) to[short] (16.3, -2) to[C, l={\shortstack{$C_4$\\$4.7\text{pF}$}}] (16.3, -4) to [short] (16.3, -6) node[ground] {};
+
+    \draw (12.5, -3) node[npn, anchor=B] (Q1) {};
+    \node[right=6pt, align=center] at (Q1) {$Q_1$\\BC547};
+
+    \draw (9.5, -3) to[short] (Q1.B);
+
+    \draw (Q1.E) to[R, l={\shortstack{$R_5$\\$220\Omega$}}] (Q1.E |- 12.5, -6) node[ground] {};
+
+    \draw (11.5, 0) to[short] (Q1.E |- 12.5, 0) to[variable capacitor] (Q1.E |- 12.5, -2) to [short] (15.3, -2) to[L, l={\shortstack{$L_2$\\$4\:\text{viklinger}$}}] (16.3, -2);
+
+    \draw (Q1.E |- 12.5, -2) to[short] (Q1.C);
+
+
 \end{circuitikz}
 \end{figure}
 
@@ -157,8 +188,7 @@ Frekvensen kan dermed uttrykkes som:
 
 \begin{gather*}
     f = \frac{1}{T} = \frac{1}{\ln(2)(R_1 + 2R_2)C_5} \\[0.5em]
-    f  \approx \frac{1.44}{(R_1 + 2R_2)C_5} \\[0.5em]
-    f = \frac{1.44}{(6.8\text{k}\Omega + 2 \cdot 82\text{k}\Omega)\cdot 3.3\text{pF}} \\[0.5em]
+    f \approx \frac{1.44}{(6.8\text{k}\Omega + 2 \cdot 82\text{k}\Omega)\cdot 3.3\text{pF}} \\[0.5em]
     f  \approx 2.55\text{MHz}
 \end{gather*}
 
@@ -197,7 +227,7 @@ For å videre kunne analysere kretsen, tar vi for oss beregninger på transistor
       node[ground] {};
 
 % Litt tekst
-\node[above] at (3,6.5) {$V_C = 9\text{V}$};
+\node[above] at (3,6) {$V_C = 9\text{V}$};
 
 % Koblingspunkt
 \fill (1.5,3) circle (2pt);
@@ -218,7 +248,7 @@ DC-analyse av denne transistorkoblingen innebærer at vi bruker Thevenins teorem
 \[
 \begin{aligned}
     V_{th} &= V_C \cdot \frac{R_4}{R_4 + R_3} \\
-    V_{th} &= 9\text{V} \cdot \frac{5.6\text{k}\Omega}{5.6\text{k}\Omega + 10\text{k}\Omega} \\
+    V_{th} &= 9\text{V} \cdot \frac{5.6\text{k}\Omega}{5.6\text{k}\Omega + 10\text{k}\Omega} \\[0.5em]
     V_{th} &\approx 3.23\text{V}
 \end{aligned}
 \]
@@ -229,8 +259,7 @@ DC-analyse av denne transistorkoblingen innebærer at vi bruker Thevenins teorem
 \[
 \begin{aligned}
     R_{th} &= R_3 \parallel R_4 \\
-    R_{th} &= \left( \frac{1}{R_3} + \frac{1}{R_4} \right)^{-1} \\
-    R_{th} &= \left( \frac{1}{10\text{k}\Omega} + \frac{1}{5.6\text{k}\Omega} \right)^{-1} \\
+    R_{th} &= \left( \frac{1}{10\text{k}\Omega} + \frac{1}{5.6\text{k}\Omega} \right)^{-1} \\[0.5em]
     R_{th} &\approx 3.59\text{k}\Omega
 \end{aligned}
 \]
