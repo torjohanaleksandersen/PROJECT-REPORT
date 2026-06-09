@@ -102,6 +102,7 @@ En bipolar junction transistor (BJT) er en type transistor som består av tre la
 \subsection{NE555 timer}
 
 \subsection{Antenne}
+En antenne er en elektrisk komponent som er laget for å sende og/elelr motta radiosignaler. Den fungerer ved å konvertere elektriske signaler til elektromagnetiske bølger, og omvendt. Dersom vi påtrykker en skiftende spenning på antennen, vil elektronene inni antennen oscillere langs antennen på samme frekvens som spenningen. Etter Maxwells lover vil elektronene indusere et eleketrisk og magnetisk felt, dette gir opphav for at den elektromagnetiske energien kan propergere gjennom rommet. Målet med antennen i dette prosjektet blir å generere frekvenser fra kretsen og sende det på antennen, slik at antennen på radioen vi ønsker å jamme kan ta opp signalet og dermed forstyrre kommunikasjonen.
 
 
 \subsection{Kretsanalyse}
@@ -111,6 +112,14 @@ I denne seksjonen presenterer vi kretsen, og gjør beregninger på den for å be
 \centering
 \includegraphics[width=0.9\textwidth]{Media/circuit.png}
 \caption{Mobiljammerkretsen.}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{circuitikz}
+    \draw (0, 0) to[switch] (0, -3) to [battery1, l_={9V}] (0, -6) node[ground] {};
+    \draw (0, 0) to[short] (1.5, 0) to[R, l={\shortstack{$R_6$\\$1\text{k}\Omega$}}] (1.5, -3) to[led, l={\shortstack{$LED_1$}}] (1.5, -6) node[ground] {};
+\end{circuitikz}
 \end{figure}
 
 \noindent
@@ -349,91 +358,89 @@ f_0 \approx \frac{1}{2\pi \sqrt{L_{eq} C_{eq}}}
 Den effektive kapasitansen i resonanskretsen består hovedsakelig av trimmerkondensatoren \(C_5\), kondensatoren \(C_3\) og ulike parasittkapasitanser fra transistor, kretskort og antenne. Den kan derfor tilnærmes som
 
 \[
-C_{eq} \approx C_5 + C_3 + C_{par},
+C_{eq} \approx C_{trimmer} + C_3 + C_{par}
 \]
 \noindent
 der
 \[
-C_{par} = C_{cb} + C_{antenne} + C_{PCB}.
+C_{par} = C_{Q} + C_{antenne} + C_{PCB}
 \]
 \noindent
 Med komponentverdiene fra kretsen fås
 \[
-C_{eq} \approx 30\text{pF} + 2\text{pF} + C_{par}.
+C_{eq} \approx 30\text{pF} + 2\text{pF} + C_{par}
 \]
 \noindent
 Dersom parasittkapasitansene neglisjeres, blir den effektive kapasitansen
 \[
-C_{eq} \approx 32\text{pF}.
+C_{eq} \approx 32\text{pF}
 \]
 \noindent
 I praksis vil parasittkapasitansene bidra med noen få pikofarad, slik at den effektive kapasitansen typisk ligger i området
 \[
-C_{eq} \approx 35\text{pF} - 40\text{pF}.
+C_{eq} \approx C_{trimmer} + 5\text{pF}
 \]
 \noindent
-For å jamme FN-frekvenser må resonansfrekvensen ligge et sted rundt 100MHz. Ved å bruke formelen for resonansfrekvensen kan vi finne den nødvendige induktansen i spolene:
+For å jamme FN-frekvenser må resonansfrekvensen ligge et sted rundt 100MHz. Siden 100MHz er ca. midt i FM-båndet (88-108 MHz) kan vi bruke $C_{trimmer} = 10$pF. Ved å bruke formelen for resonansfrekvensen kan vi finne den nødvendige induktansen i spolene:
 \begin{gather*}
     L_{eq} = \frac{1}{(2\pi f_0)^2 C_{eq}} \\
-    L_{eq} \approx \frac{1}{(2\pi \cdot 100\text{MHz})^2 \cdot 35\text{pF}} \\
-    L_{eq} \approx 72.4\text{nH}
+    L_{eq} \approx \frac{1}{(2\pi \cdot 100\text{MHz})^2 \cdot 15\text{pF}} \\
+    L_{eq} \approx 168.9\text{nH}
 \end{gather*}
 
 \noindent
-I den aktuelle kretsen bidrar $L_1$ for resonanskretsen og $L_2$ for tilbakekoblingen. Ekvivalente induktans kan tilnærmes som hovedsaklig $L_1$ og et lite bidrag fra $L_2$. Ekvivalente induktans kan derfor tilnærmes til $L_1$ pluss den gjensidige induktansen mellom $L_1$ og $L_2$.
+I den aktuelle kretsen er spolene elektrisk seriekoblet og magnetisk koblet, noe som gjør at den totale induktansen uttrykkes som:
 \begin{gather*}
-    L_{eq} = L_1 + M \\
-    L_{eq} = L_1 + k \sqrt{L_1L_2}, \quad k \approx 0.1 \\
+    L_{eq} = L_1 + L_2 + M \\
+    L_{eq} = L_1 + L_2 + k \sqrt{L_1L_2}, \quad k \approx 0.05 \\
 \end{gather*}
 \noindent
-der $L_{eq} = 72.4\text{nH}$ og $k \approx 0.1$ som et estimat basert på effekten av den magnetiske koblingen. Ved å bruke formelen for induktans i en spole kan vi finne antall viklinger som trengs for å oppnå denne induktansen, gitt en spole med diameter $r$, antall viklinger $N$ og lengde $l$:
+der $L_{eq} = 168.9\text{nH}$ og $k \approx 0.05$ som et estimat basert på effekten av den magnetiske koblingen. Verdien for k kan approksimeres ganske lav, ved at spolene vil være omtrent én diameter unna hverandre. Ved å bruke formelen for induktans i en spole kan vi finne antall viklinger som trengs for å oppnå denne induktansen, gitt en spole med diameter $r$, antall viklinger $N$ og lengde $l$:
 \begin{gather*}
     L = \frac{\mu_0 N^2 \pi r^2}{l}, \qquad A = \pi r^2 \\
     L_1 = \frac{4\pi \cdot 10^{-7} \cdot (3)^2 \cdot \pi (4\text{mm})^2}{7.5\text{mm}} \qquad L_2 = \frac{4\pi \cdot 10^{-7} \cdot (4)^2 \cdot \pi (4\text{mm})^2}{7.5\text{mm}} \\
     L_1 \approx 75.8\text{nH} \qquad
     L_2 \approx 134.8\text{nH} \\
-    L_{eq} \approx L_1 + k \sqrt{L_1 L_2} \\
-    L_{eq} \approx 85.28\text{nH}
+    L_{eq} \approx L_1 + L_2 + k \sqrt{L_1 L_2} \\
+    L_{eq} \approx 216.7\text{nH}
 \end{gather*}
+
+\noindent
+Dette er noe høyere enn den nødvendige induktansen på 168.9nH, men formelen for induktans i en spole er en tilnærming for en perfekt solenoid, og i praksis vil den faktiske induktansen være lavere på grunn av endeeffekter og ikke-ideell spolegeometri. Derfor antar vi at disse spoleparametrene vil gi en induktans i nærheten av det nødvendige for å oppnå ønsket resonansfrekvens, ettersom at den tvinnet spolen i virkeligheten ikke er perfekt.
 
 \begin{table}[H]
 \centering
 \caption{Valgte spesifikasjoner for de magnetisk koblede luftspolene.}
 \label{tab:spolespesifikasjoner}
-\begin{tabular}{lccccc}
+\begin{tabular}{lcccc}
 \toprule
-\textbf{Spole} & \textbf{Viklinger} & \textbf{Radius [mm]} & \textbf{Lengde [mm]} & \textbf{Tråd} & \textbf{Induktans [nH]} \\
+\textbf{Spole} & \textbf{Viklinger} & \textbf{Radius [mm]} & \textbf{Lengde [mm]}  & \textbf{Induktans [nH]} \\
 \midrule
 
-$L_1$ & 3 & 4.0 & 7.5 & 24 AWG & 75.8 \\
-$L_2$ & 4 & 4.0 & 7.5 & 24 AWG & 134.8 \\
+$L_1$ & 3 & 4.0 & 7.5 & 75.8 \\
+$L_2$ & 4 & 4.0 & 7.5 & 134.8 \\
 
 \bottomrule
 \end{tabular}
 \end{table}
-
-\noindent
-Dette er noe nære den utregnede induktansen på 72.4nH, og vil derfor kunne gi en resonansfrekvens i nærheten av FM-båndområdet. Siden resonansfrekvensen er avhengig av ekvivalent kapasitans, kan vi regne ut hvordan resonansfrekvensen vil variere med ulike verdier av trimmerkapasitans og parasittkapasitans. Dette er oppsummert i tabellen under.
 
 \begin{table}[H]
 \centering
-\caption{Estimert resonansfrekvens for ulike verdier av trimmer- og parasittkapasitans.}
+\caption{Estimert resonansfrekvens for ulike verdier av trimmerkapasitans. Gitt $L_{eq} = 216.7\text{nH}$}
 \label{tab:resonansfrekvens}
-\begin{tabular}{lccc}
+\begin{tabular}{lcc}
 \toprule
-\textbf{$C_5$ [pF]} & \textbf{$C_{par}$ [pF]} & \textbf{$C_{eq}$ [pF]} & \textbf{$f_0$ [MHz]} \\
+\textbf{$C_{trimmer}$ [pF]} & \textbf{$C_{eq}$ [pF]} & \textbf{$f_0$ [MHz]} \\
 \midrule
 
-3  & 0 & 5  & 243.7 \\
-33 & 0 & 35 & 92.1 \\
-3  & 5 & 10 & 172.3 \\
-33 & 5 & 40 & 86.2 \\
+3  & 8  & 121.1 \\
+33 & 38 & 55.6 \\
 
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{Kommentar til utregninger. } Beregningen viser at oscillasjonsfrekvensen vil ligge i området mellom 86MHz og 172MHz, avhengig av den effektive kapasitansen i kretsen. 555-timeren fungerer som en eksitasjonskilde for transistortrinnet. Den endelige utsendte frekvensen bestemmes hovedsakelig av LC-resonanskretsen, mens firkantsignalet bidrar til å skape et bredere spekter av frekvenskomponenter som kan forstyrre mottakeren.
+\paragraph{Kommentar til utregninger. } Beregningen viser at oscillasjonsfrekvensen vil ligge i området mellom 55.6MHz og 121.1MHz, avhengig av den effektive kapasitansen i kretsen. Som betyr at vi vil treffe FM-båndet bra. 555-timeren fungerer som en eksitasjonskilde for transistortrinnet. Den endelige utsendte frekvensen bestemmes hovedsakelig av LC-resonanskretsen, mens firkantsignalet bidrar til å skape et bredere spekter av frekvenskomponenter som kan forstyrre mottakeren.
 
 \paragraph{RF- til antenna. } RF-signalet på omtrent 100MHz som genereres av oscillator-kretsen, vil bli matet til antennen fra RF-kretsen gjennom kondensatoren $C_4$. Denne kondensatoren fungerer som en koblingskondensator, som blokkerer DC-komponenter og lar AC-signalet passere til antennen. Antennen vil deretter stråle ut det genererte RF-signal i det elektromagnetiske spektrumet, og dermed kunne jamme kommunikasjon på de aktuelle frekvensene.
 \\[1em]
