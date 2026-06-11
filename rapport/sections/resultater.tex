@@ -2,12 +2,18 @@
 I denne seksjonen av rapporten vil fremgangsmåten fra design til ferdig produkt presenteres, i tillegg vil måleresultater presenteres.
 
 \subsection{PCB-design og utvikling}
-PCB-design ble utviklet ved bruk av Proteus 9.0, og det elektriske skjemaet ble implementert i henhold til teoridelen. Designet inkluderte å benytte seg av packages for de komponentene som hadde det, og vi benyttet hullfunksjon for de komponentene som ikke hadde det. PCB-designet ble nøye gjennomgått for å sikre at hull var i riktig størrelse, og at det var tilstrekkelig plass for alle komponentene og ingen overlapper.
+PCB-design ble utviklet ved bruk av Proteus 9.0, og det elektriske skjemaet ble implementert i henhold til teoridelen. Designet inkluderte å benytte seg av packages for de komponentene som hadde det, og jeg benyttet hullfunksjon for de komponentene som ikke hadde det. PCB-designet ble nøye gjennomgått for å sikre at hull var i riktig størrelse, og at det var tilstrekkelig plass for alle komponentene og ingen overlapper.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Media/PCB_design.png}
+\caption{Resultat av lodding.}
+\end{figure}
 
 \subsection{Breadboard oppkobling og testing}
 Første testen innebærte å koble opp kretsen på et breadboard for å verifisere at den fungerer som forventet. Kretsen ble koblet opp ihendhold til det elektriske skjemaet i teoridelen. Her ble ikke switchen eller batteriet benyttet, ettersom at en spenningskilde med av/på knapp var tilstrekkelig.
 \\[1em]
-Testen viste at kretsen fungerte som forventet. Vi benyttet en FM-radio som var stilt inn på 101.1MHz, og dersom vi stilte på trimmerkondensatoren, ble det betydelig støy på radioen. Musikken var fortsatt noe gjenkjennbart, men dersom antennen var nærme nok, ble radioen helt uforståelig. Dette indikerte at kretsen fungerte akkurat som den skal på breadboardet.
+Testen viste at kretsen fungerte som forventet. Vi benyttet en FM-radio som var stilt inn på 101.1MHz, og dersom jeg stilte på trimmerkondensatoren, ble det betydelig støy på radioen. Musikken var fortsatt noe gjenkjennbart, men dersom antennen var nærme nok, ble radioen helt uforståelig. Dette indikerte at kretsen fungerte akkurat som den skal på breadboardet.
 \\[1em]
 Under testing bemerket jeg meg av ganske lav rekkevidde, noe som skyldes lav sendereffekt. Jamming ble ekstremt merkbar dersom antennen var innen 30cm og i samme dipolretning av radioen. Forventningene til denne kretsen er ikke ekstrem sendereffekt.
 
@@ -30,11 +36,17 @@ Under testing bemerket jeg meg av ganske lav rekkevidde, noe som skyldes lav sen
 \end{table}
 
 \subsection{Drilling og lodding}
-Først benyttet vi drillen på laboratoriet for å lage hull i den fysiske PCB-en i henhold til designets hullstørrelser. Etter at hullene var boret, begynte vi å lodde komponentene på plass. Loddingen på dette prosjektet er ikke tilstrekkelig kvalitet, og det er flere steder hvor det er kaldloddinger, og det er også noen steder hvor det er for mye loddetinn, og andre plasser hvor loddetinnet ligger litt høyt på komponenten. 
+Først benyttet jeg drillen på laboratoriet for å lage hull i den fysiske PCB-en i henhold til designets hullstørrelser. Etter at hullene var boret, begynte jeg å lodde komponentene på plass. Loddingen på dette prosjektet er ikke tilstrekkelig kvalitet, og det er flere steder hvor det er kaldloddinger, og det er også noen steder hvor det er for mye loddetinn, og andre plasser hvor loddetinnet ligger litt høyt på komponenten. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Media/lodde_resultat.jpeg}
+\caption{Resultat av lodding.}
+\end{figure}
 
 
 \subsection{Testing av ferdig PCB}
-Testen av den ferdige fysiske PCBen gikk ikke som planlagt. LED-dioden lyste ikke dersom switchen stod i ON modus. Det ble utført spenningsmålinger for å se hvorfor ingenting skjedde. Det viste seg at spenningen over LED-dioden var tilnærmet null, spenningen fra positiv terminal til negativ terminal på kretskortet gav $V_B = 9.32\text{V}$. Målingen av spenning over switchen viste et fall tilnærmet lik batterikilden, noe som viste at switchen ikke lot spenning gjennom. Etter nærmere målinger på switchen, bemerket vi oss av at spenningen ikke propergerte fra loddetinnet til kobbertråden.
+Testen av den ferdige fysiske PCBen gikk ikke som planlagt. LED-dioden lyste ikke dersom switchen stod i ON modus. Det ble utført spenningsmålinger for å se hvorfor ingenting skjedde. Det viste seg at spenningen over LED-dioden var tilnærmet null, spenningen fra positiv terminal til negativ terminal på kretskortet gav $V_B = 9.32\text{V}$. Målingen av spenning over switchen viste et fall tilnærmet lik batterikilden, noe som viste at switchen ikke lot spenning gjennom. Etter nærmere målinger på switchen, bemerket jeg oss av at spenningen ikke propergerte fra loddetinnet til kobbertråden.
 \begin{figure}[H]
     \centering
 
@@ -56,4 +68,55 @@ Testen av den ferdige fysiske PCBen gikk ikke som planlagt. LED-dioden lyste ikk
     \label{fig:pcb_both}
 \end{figure}
 \noindent
-For å teste prosjektet benyttet vi oss av en kortslutning over switchen. Da lyste LED-dioden og gav indikasjon for at kretsen nå jammet. Vi benyttet en testmatrise for jamming der vi sjekket ved avstander lik i tabell~\ref{tab:breadboard-resultater}. Uansett, funket ikke PCB versjonen av prosjektet. Den gav ingen jamming uansett hvilken trimming-kapasitans. Resultatet for ferdig PCB kan oppsummeres av at den ikke funket.
+For å teste prosjektet benyttet jeg oss av en kortslutning over switchen. Da lyste LED-dioden og gav indikasjon for at kretsen nå jammet. Vi benyttet en testmatrise for jamming der jeg sjekket ved avstander lik i tabell~\ref{tab:breadboard-resultater}. Uansett, funket ikke PCB versjonen av prosjektet. Den gav ingen jamming uansett hvilken trimming-kapasitans. Resultatet for ferdig PCB kan oppsummeres av at den ikke funket.
+
+\paragraph{Feilsøking. } Feilsøkingsprosessen innebærte å ta mange målinger for å se hvor det går galt. Først målet jeg for å sjekke om batterispenningen kom dit jeg ønsket, og da spesielt på pinnene på timeren (pin 4 og 8). I tillegg målte jeg transistorens DC-egenskaper.
+
+\begin{table}[H]
+\centering
+\caption{DC-målinger for feilsøking}
+\label{tab:DC-resultater}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Komponent } & \textbf{Spenning} & \textbf{Beskrivelse} \\
+\midrule
+
+$V_{pin4}$ & 8.07V & Timer pin 4 \\
+$V_{pin8}$ & 8.07V & Timer pin 8 \\
+$V_{R3}$ & 7.04V & Basemotstand $R_3$ \\
+$V_B$ & 0.822V & Basespenning \\
+$V_E$ & 0.134V & Emitterspenning \\
+$V_C$ & 44.3mV & Kollektorspenning \\
+$V_{ANT1}$ & 124mV & Spenning rett før antennen \\
+$V_{ANT2}$ & 44.3mV & Spenning på antennen \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+Videre tok jeg målinger for AC verdier på oscilloskopet for å se om frekvensene og signalene var som forventet. Fokusområdet her var å finne ut hvilke frekvenser RF-kretsen faktisk produserte, hva som propergerte på antennen og AC-spenningen på transistoren.
+
+\begin{figure}[H]
+    \centering
+
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth, angle=-90]{Media/AC_før_ANT.jpeg}
+        \caption{Signalet før antennen.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth, angle=-90]{Media/AC_etter_ANT.jpeg}
+        \caption{Signalet på antennen.}
+    \end{subfigure}
+
+    \caption{Signalet i området av antennen.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth, angle=-90]{Media/AC_base.jpeg}
+\caption{AC-spenning på basen av transistoren.}
+\end{figure}
