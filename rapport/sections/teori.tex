@@ -193,7 +193,16 @@ Frekvensen kan dermed uttrykkes som:
 \end{gather*}
 
 \noindent
-Det vi i praksis har fått her er et firkantsignal med omtrentlig denne frekvensen. Denne blir satt på pin 3 (out) og vi kan videre analysere transistorens rolle i kretsen.
+Det vi i praksis har fått her er et firkantsignal med omtrentlig denne frekvensen. Denne blir satt på pin 3 (out) og vi kan videre analysere transistorens rolle i kretsen. Kondensatoren $C_1$ sin impedans kan regnes ut ved uttrykket.
+\begin{gather*}
+    X_C = \frac{1}{2 \pi f C} \\
+    X_{C1} = \frac{1}{2 \pi \cdot 2.55 \cdot 10^6 \cdot 4.7 \cdot 10^{-6}} \\
+    X_{C1} \approx 0.013\Omega
+\end{gather*}
+\noindent
+Kondensatoren her demper nesten ingenting av signalet på grunn av dens lave impedans ved frekvensen. AC-signalet på basen på transistoren kan derfor tolkes som et avrundet firkantsignal ved samme frekvens.
+
+
 \paragraph{Transistoren $Q_1$. }
 For å videre kunne analysere kretsen, tar vi for oss beregninger på transistoren. Først kan vi analysere transistoren i DC-tilstand. Her blir kondensatorer omgjort til åpne kretser og spolene omgjort til kortslutninger, da vil toppskinnens spenning gjelde for kollektoren.
 
