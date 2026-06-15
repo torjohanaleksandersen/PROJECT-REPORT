@@ -1,1 +1,10 @@
 \section{Diskusjon}
+
+Prosjektet funket ikke. I denne seksjonen av rapporten ønsker jeg å diskutere og komme fram til gode grunner til hvorfor den ikke funker. Prosjektet funket på breadboard og vi må derfor se nærmere på selve PCB-prosjektet og hvorfor det ikke funket her.
+
+\subsection{Analyse av målinger}
+Målingene jeg presenterte i resultatseksjonen kan forklare hvorfor det ikke funker. Ser vi nærmere på DC-målingene i tabell~\ref{tab:DC-resultater} kan vi bemerke oss av en ekstrem lav kollektorspenning på transistoren. I vår DC-analyse av transistoren benyttet vi oss av en kollektorspenning på 9V, og dette fordi vi baserer det på grunnleggende teori om spolen at den vil bare indusere en spenning dersom strømmen endrer seg. Uansett, måler vi $44.3\text{mV}$ fremfor forventet $9\text{V}$. Her konkluderer jeg at det må være dårlig kontakt fra loddetinn til kobbertråden.
+\\[1em]
+Videre kan vi analysere resten av transistorens DC-målinger. Beregningene i teoriseksjonen tilsier en transistor med et fungerende arbeidspunkt $Q(V_{CE}, I_C) = (6.60\text{V}, 10.86\text{mA})$, men etter våre målinger har vi en transistor ved metningsområdet $V_{CE} \le 200\text{mV}$. Det betyr at transistoren opererer ikke som forventet, og dette blir et hovedmoment i begrunnelse for et ikke-fungerende prosjekt.
+\\[1em]
+Målingene rundt antennen viser at frekvensen er veldig dårlig tilpasset, hvor det jeg praktisk målte ($f_M$) er helt utenom teorien ($f_T$); $f_{T} = \left\{55.6, 121.1\right\} \text{MHz}$ og $f_{M} = 10\text{kHz}$. Med disse målingene ser vi klart hvordan jeg ikke klarte å forstyrre FM-båndet. I tillegg vil mesteparten av effekten på antennen forbli i feltene, og dermed ikke stråle ut som energi. Dette er fordi én bølgelengde til signalet er mye lengre enn antennen.

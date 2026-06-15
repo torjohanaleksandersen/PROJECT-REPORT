@@ -87,8 +87,6 @@ $V_{R3}$ & 7.04V & Basemotstand $R_3$ \\
 $V_B$ & 0.822V & Basespenning \\
 $V_E$ & 0.134V & Emitterspenning \\
 $V_C$ & 44.3mV & Kollektorspenning \\
-$V_{ANT1}$ & 124mV & Spenning rett før antennen \\
-$V_{ANT2}$ & 44.3mV & Spenning på antennen \\
 
 \bottomrule
 \end{tabular}
@@ -115,8 +113,31 @@ Videre tok jeg målinger for AC verdier på oscilloskopet for å se om frekvense
     \caption{Signalet i området av antennen.}
 \end{figure}
 
+\noindent
+Målingene vises i tabellen under.
+
+\begin{table}[H]
+\centering
+\caption{DC-målinger for feilsøking}
+\label{tab:Antenne-resultater}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Område } & \textbf{Spenning} & \textbf{Frekvens} \\
+\midrule
+
+Før antenne & $6.00\text{mV}_{pp}$ & $\approx 120\text{kHz}$ \\
+Etter antenne & $3.80\text{mV}_{pp}$ & $\approx 10\text{kHz}$ \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth, angle=-90]{Media/AC_base.jpeg}
 \caption{AC-spenning på basen av transistoren.}
 \end{figure}
+
+\noindent
+På basen av transistoren måler vi en ganske forstyrret sinusbølge med frekvens $f \approx 19.7kHz$, og spenning $V = 152\text{mV}_{pp}$.
