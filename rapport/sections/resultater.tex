@@ -1,5 +1,5 @@
 \section{Gjennomføring med måleresultater}
-I denne seksjonen av rapporten vil fremgangsmåten fra design til ferdig produkt presenteres, i tillegg vil måleresultater presenteres.
+I denne seksjonen av rapporten vil fremgangsmåten fra design til ferdig produkt presenteres, i tillegg vil måleresultater og bilder presenteres.
 
 \subsection{PCB-design og utvikling}
 PCB-design ble utviklet ved bruk av Proteus 9.0, og det elektriske skjemaet ble implementert i henhold til teoridelen. Designet inkluderte å benytte seg av packages for de komponentene som hadde det, og jeg benyttet hullfunksjon for de komponentene som ikke hadde det. PCB-designet ble nøye gjennomgått for å sikre at hull var i riktig størrelse, og at det var tilstrekkelig plass for alle komponentene og ingen overlapper.
@@ -7,7 +7,7 @@ PCB-design ble utviklet ved bruk av Proteus 9.0, og det elektriske skjemaet ble 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{Media/PCB_design.png}
-\caption{Resultat av lodding.}
+\caption{PCB-design i proteus programvare.}
 \end{figure}
 
 \subsection{Breadboard oppkobling og testing}
@@ -46,7 +46,7 @@ Først benyttet jeg drillen på laboratoriet for å lage hull i den fysiske PCB-
 
 
 \subsection{Testing av ferdig PCB}
-Testen av den ferdige fysiske PCBen gikk ikke som planlagt. LED-dioden lyste ikke dersom switchen stod i ON modus. Det ble utført spenningsmålinger for å se hvorfor ingenting skjedde. Det viste seg at spenningen over LED-dioden var tilnærmet null, spenningen fra positiv terminal til negativ terminal på kretskortet gav $V_B = 9.32\text{V}$. Målingen av spenning over switchen viste et fall tilnærmet lik batterikilden, noe som viste at switchen ikke lot spenning gjennom. Etter nærmere målinger på switchen, bemerket jeg oss av at spenningen ikke propergerte fra loddetinnet til kobbertråden.
+Testen av den ferdige fysiske PCB-en gikk ikke som planlagt. LED-dioden lyste ikke dersom switchen stod i ON modus. Det ble utført spenningsmålinger for å se hvorfor ingenting skjedde. Det viste seg at spenningen over LED-dioden var tilnærmet null, spenningen fra positiv terminal til negativ terminal på kretskortet gav $V_B = 9.32\text{V}$. Målingen av spenning over switchen viste et fall tilnærmet lik batterikilden, noe som viste at switchen ikke lot spenning gjennom. Etter nærmere målinger på switchen, bemerket jeg oss av at spenningen ikke propergerte fra loddetinnet til kobbertråden.
 \begin{figure}[H]
     \centering
 
@@ -113,9 +113,6 @@ Videre tok jeg målinger for AC verdier på oscilloskopet for å se om frekvense
     \caption{Signalet i området av antennen.}
 \end{figure}
 
-\noindent
-Målingene vises i tabellen under.
-
 \begin{table}[H]
 \centering
 \caption{DC-målinger for feilsøking}
@@ -135,7 +132,7 @@ Etter antenne & $3.80\text{mV}_{pp}$ & $\approx 10\text{kHz}$ \\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth, angle=-90]{Media/AC_base.jpeg}
+\includegraphics[width=0.7\textwidth, angle=0]{Media/AC_base.jpeg}
 \caption{AC-spenning på basen av transistoren.}
 \end{figure}
 

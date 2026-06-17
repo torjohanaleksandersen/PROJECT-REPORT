@@ -23,6 +23,7 @@ Måleinstrumentene introduserer flere mulige feilkilder. Denne feilkilden utgjø
 NE-timeren produserer et veldig høyt frekvent signal for sin klasse. Nærmere analyse av datasheetet gir en typisk stige- og falletid på 100ns. Dette gir en teoretisk maksfrekvens på 5MHz. Ved vår oscilleringsfrekvens på 2.55MHz, betyr det at timeren vil bruke omtrent halvparten av perioden bare på å stige og falle. Dette betyr da at vi ikke produserer et firkantsignal, men et ganske avrundet et. Fra pin 3 til basen på transistoren har vi en kondensator som vil avrunde signalet enda mer, målingen av en sinusbølge kan derfor gi mening.
 
 \subsection{Hovedfunn opp mot hensikt}
+Hensikten med rapporten er å analysere hvordan kretsen er bygget opp, beregne forventede verdier for sentrale deler av kretsen og gjennomgå grundig feilsøking med målinger. Rapporten skal også vurdere hvilke faktorer som påvirker om kretsen oppnår ønsket funksjon. Denne rapportoppgaven har oppnådd å analysere kretsen, samt kunne bruke informasjonen til å utlede en RF-krets som vil funke etter jamming av FM-båndet (88 - 108MHz). I tillegg har rapporten presentert en rekke målinger, som har blitt brukt for å definere akkurat hvorfor den ikke fungerte som forventet.
 
 \subsection{Mulige bruksområder}
 Bruksområdet til dette prosjektet er ikke bredt, og kan i praksis bare være for forstyrring av radio. Det er mulig å endre RF-delen av kretsen for å forstyrre et annet bånd, men frekvensen er imidlertid sperret av komponentenes egenskaper. Timeren vi benytter kan maks produsere et firkantsignal på 5MHz, og spesifikasjon til transistoren gir en typisk maks arbeidsfrekvens rundt 300MHz.
@@ -30,6 +31,6 @@ Bruksområdet til dette prosjektet er ikke bredt, og kan i praksis bare være fo
 Antennens rekkevidde er også begrenset av hvor mye effekt som leveres, dette er veldig begrenset av batteriets kapasitet. Det mest realistiske å kunne jamme er en FM-radio veldig nærme, pågrunn av frekvensen og rekkevidden av antennen. Det som blir et umulig bruksområdet er å kunne alle frekvenser over 300MHz, som innebærer blant annet mobiltelefoner, 5G, Bluetooth og GPS.
 
 \subsection{Forbedringer og videre arbeid}
-En klar forbedring hadde vært grundigere arbeid på den fysiske PCBen. Det kreves mer øving på lodding før jeg loddet selve PCBen. I tillegg til å utbedre kontaktflaten til kobbertråden, slik at spenning faktisk overføres fra loddetinn til kobbertråd. Ved disse forbedringene er det høy sannsynlig at kretsen funker likt som breadboardversjonen.
+En klar forbedring hadde vært grundigere arbeid på den fysiske PCB-en. Det kreves mer øving på lodding før jeg loddet selve PCB-en. I tillegg til å utbedre kontaktflaten til kobbertråden, slik at spenning faktisk overføres fra loddetinn til kobbertråd. Ved disse forbedringene er det høy sannsynlig at kretsen funker likt som breadboardversjonen.
 \\[1em] 
 Videre kunne en enda grundigere analyse av komponentene vi kjøpte vært nødvendig. Å bestille en switch uten through-hole pinner, førte til en kobbertråd løsning som ikke funket i praksis. 

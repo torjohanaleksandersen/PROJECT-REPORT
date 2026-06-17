@@ -1,4 +1,5 @@
 \section{Teori}
+I denne seksjonen vil jeg presentere grunnleggende teori for hver komponent i kretsen, samt også analysere kretsen i prosjektet. Jeg vil presentere beregninger for kretsen slik at vi forsikrer oss at den fungerer som planlagt. Til slutt vil jeg presentere frekvensområdet kretsen vår blir aktuell for.
 
 \subsection{LED-diode}
 
@@ -97,6 +98,17 @@ En bipolar junction transistor (BJT) er en type transistor som består av tre la
 \end{figure}
 \noindent
 
+\noindent
+I en NPN-transistor styres kollektorstrømmen av strømmen som går inn i basen. Når base-emitter-overgangen er frempolarisert, typisk ved en spenning på omtrent $V_{BE}\approx0.7$V for silisiumtransistorer, vil en liten basestrøm kunne kontrollere en betydelig større kollektorstrøm. Sammenhengen kan tilnærmes som
+
+\[
+I_C = \beta I_B
+\]
+
+\noindent
+der $I_C$ er kollektorstrømmen, $I_B$ er basestrømmen og $\beta$ er transistorens strømforsterkning. Transistorens strømforsterking ligger ofte i området 100 til 500, som betyr at det er stor forsterking. \\[1em]
+I denne rapporten benyttes transistoren BC547 som et aktivt element i oscillatortrinnet. Transistorens oppgave er å gi nødvendig forsterkning til tilbakekoblingssløyfen slik at Barkhausens kriterium kan oppfylles og oscillasjonen opprettholdes.
+
 
 
 \subsection{NE555 timer}
@@ -118,39 +130,7 @@ I denne seksjonen presenterer vi kretsen, og gjør beregninger på den for å be
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{Media/circuit.png}
-\caption{Mobiljammerkretsen.}
-\end{figure}
-
-\begin{figure}
-\centering
-\begin{circuitikz}
-    \draw (0, 0) to[switch] (0, -3) to [battery1, l_={9V}] (0, -6) node[ground] {};
-    \draw (0, 0) to[short] (1.5, 0) to[R, l={\shortstack{$R_6$\\$1\text{k}\Omega$}}] (1.5, -3) to[led, l={\shortstack{$LED_1$}}] (1.5, -6) node[ground] {};
-    \draw (1.5, 0) to[short] (4.3, 0) to[R, l={\shortstack{$R_1$\\$6.8\text{k}\Omega$}}] (4.3, -2) to[R, l={\shortstack{$R_2$\\$82\text{k}\Omega$}}] (4.3, -4) to[C, l={\shortstack{$C_5$\\$3.3\text{pF}$}}] (4.3, -6) node[ground] {};
-    \draw(4.3, 0) to[short] (7.5, 0) to[short] (7.5, -2);
-    \draw(7.5, -4) to[short] (7.5, -6) node[ground] {};
-
-    \draw (7.5, -3) to[cC, l={\shortstack{$C_1$\\$4.7\text{pF}$}}] (9.5, -3) to[C, l={\shortstack{$C_2$\\$47\text{pF}$}}] (9.5, -6) node[ground] {};
-
-    \draw(9.5, -3) to[short] (9.5, 0) to[short] (11.5, 0);
-
-    \draw (7.5, 0) to[short] (11.5, 0) to[R, l={\shortstack{$R_3$\\$10\text{k}\Omega$}}] (11.5, -3) to[R, l={\shortstack{$R_4$\\$5.6\text{k}\Omega$}}] (11.5, -6) node[ground] {};
-
-    \draw (14.3, 0) to[short] (15.3, 0) to[L, l={\shortstack{$L_1$\\$3\:\text{viklinger}$}}] (16.3, 0) to[short] (16.3, -2) to[C, l={\shortstack{$C_4$\\$4.7\text{pF}$}}] (16.3, -4) to [short] (16.3, -6) node[ground] {};
-
-    \draw (12.5, -3) node[npn, anchor=B] (Q1) {};
-    \node[right=6pt, align=center] at (Q1) {$Q_1$\\BC547};
-
-    \draw (9.5, -3) to[short] (Q1.B);
-
-    \draw (Q1.E) to[R, l={\shortstack{$R_5$\\$220\Omega$}}] (Q1.E |- 12.5, -6) node[ground] {};
-
-    \draw (11.5, 0) to[short] (Q1.E |- 12.5, 0) to[variable capacitor] (Q1.E |- 12.5, -2) to [short] (15.3, -2) to[L, l={\shortstack{$L_2$\\$4\:\text{viklinger}$}}] (16.3, -2);
-
-    \draw (Q1.E |- 12.5, -2) to[short] (Q1.C);
-
-
-\end{circuitikz}
+\caption{FM-jammerkretsen.}
 \end{figure}
 
 \noindent
@@ -277,7 +257,7 @@ DC-analyse av denne transistorkoblingen innebærer at vi bruker Thevenins teorem
 \end{figure}
 
 \noindent
-THeveninsekvivalenten for basedelen av transistoren vil gi denne forenklede kretsen, som i praksis er det samme som i figur~\ref{fig:Q-DC}.
+Theveninsekvivalenten for basedelen av transistoren vil gi denne forenklede kretsen, som i praksis er det samme som i figur~\ref{fig:Q-DC}.
 
 \begin{figure}[H]
 \centering
@@ -349,33 +329,47 @@ V_{CE} &= V_C - I_E R_5 \\
 \end{center}
 
 \noindent
-Transistoren opererer i aktiv region, da $V_{CE} > 0.2\text{V}$ og $I_C$ er proporsjonal med $I_B$. Dette betyr at transistoren vil forsterke signalet fra NE555 timeren, og at kollektorstrømmen vil variere i takt med basestrømmen som genereres av timerens utgangssignal. Videre tar vi for oss AC-analyse av transistoren. Målet med AC-analysen er i tillegg å utforske oscillasjonsegenskapene, nærmere hva spolene burde være. Derfor vil AC-analysen beholde kondensatorene og spolene i kretsen, men vi vil kortslutte kondensator $C_1$. AC-ekvivalent er i figuren under.
+Transistoren opererer i aktiv region, da $V_{CE} > 0.2\text{V}$ og $I_C$ er proporsjonal med $I_B$. Dette betyr at transistoren vil forsterke signalet fra NE555 timeren, og at kollektorstrømmen vil variere i takt med basestrømmen som genereres av timerens utgangssignal. Videre tar vi for oss AC-analyse av transistoren. Målet med AC-analysen er i tillegg å utforske oscillasjonsegenskapene, nærmere hva spolene burde være. Derfor vil AC-analysen beholde kondensatorene og spolene i kretsen, men vi vil kortslutte kondensator $C_1$. Utregning for $R_e$ blir som under. 
+\begin{gather*}
+    r_e = \frac{V_T}{I_E} \\
+    r_e = \frac{26\text{mV}}{10.91\text{mA}} \\
+    r_e = 2.38\Omega
+\end{gather*}
+
+
+\noindent
+Dette er transistorens interne motstand som motvirker AC-signal. Denne verdien sitter lavt og betyr at transistoren har høy småsignalforsterking. AC-ekvivalent er i figuren under.
 
 \begin{figure}[H]
 \centering
 \begin{circuitikz}[american voltages]
-    \draw (0,0) -- (6,0)
-        to[R, l={\shortstack{$\beta R_e$\\$x\Omega$}}] (6,-3) to[short] (14, -3)
-        to[C, a={\shortstack{$C_3$\\$2\text{pF}$}}] (14,0) -- (15,0);
+    \draw (1,0) -- (6,0)
+        to[R, l={\shortstack{$\beta r_e$\\$714.9\Omega$}}] (6,-3) to[short] (14, -3)
+        to[C, a={\shortstack{$C_3$\\$2\text{pF}$}}] (14,0);
     
     \draw (1, 0) to[C, l={\shortstack{$C_2$\\$47\text   {pF}$}}] (1,-3) node[ground] {};
 
-    \draw (3.5, 0) to[R, l={\shortstack{$R_3 \parallel R_4$\\$y\text{k}\Omega$}}] (3.5,-3) node[ground] {};
+    \draw (3.5, 0) to[R, l={\shortstack{$R_3 \parallel R_4$\\$3.59\text{k}\Omega$}}] (3.5,-3) node[ground] {};
 
-    \draw (8, -3) to[R, l={\shortstack{$R_5$\\$220\Omega$}}] (8,-6) node[ground] {};
+    \draw (7.5, -3) to[R, l={\shortstack{$R_5$\\$220\Omega$}}] (7.5,-6) node[ground] {};
 
-    \draw (14,0) to[short] (9,0) to[cI, l={\shortstack{$\beta I_B$\\$z\text{mA}$}}] (9,-3);
+    \draw (14,0) to[short] (9,0) to[cI, l={\shortstack{$\beta I_B$\\$10.87\text{mA}$}}] (9,-3);
 
     \draw (11.5, 0) to[R, l={\shortstack{$r_o$\\$\approx \infty \Omega$}}] (11.5,-3);
 
     \draw (9, 0) to[variable capacitor, l={\shortstack{$C_5$\\$3.3\text{pF}$}}] (9,3) to [L, l={\shortstack{$L_1$\\$3\:\text{viklinger}$}}] (11.5,3) to [L, l={\shortstack{$L_2$\\$4\:\text{viklinger}$}}] (14,3) to [short] (14,0);
 
 
+    \node[left] at (1, 0) {$V_{in}$};
+    \fill (1, 0) circle (2pt);
+
+    \node[right] at (14,0) {$V_{out}$};
+    \fill (14,0) circle (2pt);
+
+
 \end{circuitikz}
 \caption{Oscillasjonsanalyse av kretsen.}
 \end{figure}
-
-\clearpage
 
 \noindent
 Oscillatorkretsen har likhetstrekk med både Colpitts- og Armstrong-oscillatorer. Resonansfrekvensen bestemmes av en LC-resonanskrets, mens tilbakekoblingen oppnås gjennom de magnetisk koblede spolene $L_1$ og $L_2$. Siden tilbakekoblingen hovedsakelig skjer induktivt gjennom en separat vikling, kan kretsen beskrives som nærmere en Armstrong-oscillator enn en klassisk Colpitts-oscillator.
